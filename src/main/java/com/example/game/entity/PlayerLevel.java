@@ -17,7 +17,11 @@ public class PlayerLevel {
 	}
 
 	public Integer getCurrentExp() {
-		return currentExp;
+		if(this.currentExp == null){
+			return 0 ;
+		}else{
+			return currentExp;
+		}
 	}
 
 	public void setCurrentExp(Integer currentExp) {

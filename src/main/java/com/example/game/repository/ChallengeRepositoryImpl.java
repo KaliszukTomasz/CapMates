@@ -40,6 +40,10 @@ public class ChallengeRepositoryImpl implements ChallengeRepository {
 	public void setChallengeList(List<Challenge> challengeList) {
 		this.challengeList = challengeList;
 	}
+	
+	public void addChallenge(Challenge challenge){
+		this.challengeList.add(challenge);
+	}
 
 	@Override
 	public List<Challenge> getPlayerAllChallengeHistory(Long playerId) {

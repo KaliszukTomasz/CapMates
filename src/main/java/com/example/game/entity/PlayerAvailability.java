@@ -6,6 +6,8 @@ import com.example.enums.Status;
 
 public class PlayerAvailability {
 
+	
+
 	private Instant startTime;
 	private Instant endTime;
 	private Status status;
@@ -13,11 +15,20 @@ public class PlayerAvailability {
 	
 	public PlayerAvailability() {
 	}
+	public PlayerAvailability(Instant startTime, Instant endTime, Status status, String message) {
+		super();
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.status = status;
+		this.message = message;
+	}
 
 	public PlayerAvailability(Instant startTime, Instant endTime) {
 		super();
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.status = Status.ONLINE;
+		this.message = "";
 	}
 
 	public Status getStatus() {

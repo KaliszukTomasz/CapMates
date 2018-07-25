@@ -25,5 +25,7 @@ public interface PlayerService {
 //	Player login(String email, String password);
 	List<Challenge> getMyChallengeHistory(Long playerId);
 	void addNewGameToMyGames(Long playerId, String gameTitle, Integer numberOfPlayers);
+	void changeStatusToOfflineOnMyAvailabilityTimeAndLeaveMessage(Long playerId, PlayerAvailability availabilityTime,
+			String Message);
 	
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 import com.example.game.entity.Game;
 import com.example.game.entity.Player;
 import com.example.game.entity.PlayerAvailability;
+import com.example.game.entity.PlayerLevel;
 import com.example.game.entity.Statistic;
 
 public interface PlayerRepository {
@@ -15,13 +16,13 @@ public interface PlayerRepository {
 
 	Long editPlayer(Player player);
 
-	void addHoursAvailability(Instant timeFrom, Instant timeTo, Long playerId);
+	void addHoursAvailability(PlayerAvailability playerAvailability, Long playerId);
 
 	void eraseHoursAvailability(Instant timeFrom, Instant timeTo, Long playerId);
 
 	Statistic getStatistics(Long playerId);
 
-	Integer getPlayerLevel(Long playerId);
+	Integer getActualPlayerLevel(Long playerId);
 
 	Set<Game> getPlayerGames(Long playerId);
 
@@ -39,4 +40,5 @@ public interface PlayerRepository {
 
 	void setPlayers(List<Player> players);
 
+	
 }

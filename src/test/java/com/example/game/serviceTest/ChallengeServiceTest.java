@@ -41,7 +41,7 @@ public class ChallengeServiceTest {
 
 	@Test
 	public void shouldShowRankingPositionOnePlayerInOneGame() {
-		int rankingPosition = challengeServiceImpl.getPlayerPositionInRankingInOneGame(3L, "Chess");
+		int rankingPosition = challengeServiceImpl.getPlayerPositionInRankingInOneGame(0L, "Chess");
 		assertEquals(1, rankingPosition);
 	}
 

@@ -110,7 +110,8 @@ public class Player {
 
 	public List<PlayerAvailability> getPlayerAvailabilityList() {
 		if (this.playerAvailabilityList == null) {
-			throw new PlayerAvailabilityListIsEmptyException();
+			this.playerAvailabilityList = new ArrayList<>();
+			return this.playerAvailabilityList;
 		} else {
 			return playerAvailabilityList;
 		}

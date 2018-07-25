@@ -1,20 +1,20 @@
 package com.example.game.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.enums.Status;
 import com.example.game.entity.Challenge;
 import com.example.game.entity.Game;
 import com.example.game.entity.Player;
 import com.example.game.entity.PlayerAvailability;
 import com.example.game.entity.Statistic;
-import com.example.game.exceptions.UnauthorizedLoginException;
 import com.example.game.mappers.ProfilPlayerMapper;
 import com.example.game.repository.ChallengeRepository;
+import com.example.game.repository.GameTypeRepository;
 import com.example.game.repository.PlayerRepository;
 import com.example.game.transferObjects.PlayerProfile;
 
@@ -30,6 +30,9 @@ public class PlayerServiceImpl implements PlayerService {
 	@Autowired
 	private ProfilPlayerMapper profilPlayerMapper;
 	
+	@Autowired
+	private GameTypeRepository gameTypeRepository;
+	
 	@Override
 	public Statistic getStatistic(Long playerId) {
 		return playerRepository.getPlayerStaistics(playerId);
@@ -37,7 +40,7 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Override
 	public Integer getMyLevel(Long playerId) {
-		return playerRepository.getPlayerLevel(playerId);
+		return playerRepository.getActualPlayerLevel(playerId);
 	}
 
 	
@@ -62,6 +65,7 @@ public class PlayerServiceImpl implements PlayerService {
 		game.setNumberOfPlayers(numberOfPlayers);
 		game.setTitle(gameTitle);
 		playerRepository.addGameToPlayerGames(playerId, game);
+		gameTypeRepository.addGameToGamesContainer(game);
 	}
 
 	@Override
@@ -85,7 +89,7 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Override
 	public void addMyAvailabilityTime(Long playerId, PlayerAvailability availabilityTime) {
-		playerRepository.addHoursAvailability(availabilityTime.getStartTime(), availabilityTime.getEndTime(), playerId);
+		playerRepository.addHoursAvailability(availabilityTime, playerId);
 
 	}
 
@@ -94,6 +98,20 @@ public class PlayerServiceImpl implements PlayerService {
 		playerRepository.eraseHoursAvailability(availabilityTime.getStartTime(), availabilityTime.getEndTime(),
 				playerId);
 
+	}
+	
+	@Override
+	public void changeStatusToOfflineOnMyAvailabilityTimeAndLeaveMessage(Long playerId, PlayerAvailability availabilityTime, String message){
+		Player player = playerRepository.getPlayer(playerId);
+		
+		for(PlayerAvailability availability : player.getPlayerAvailabilityList()){
+			if(availability.getStartTime().equals(availabilityTime.getStartTime())
+					&& availability.getEndTime().equals(availabilityTime.getEndTime())){
+				availability.setStatus(Status.OFFLINE);
+				availability.setMessage(message);
+			}
+			
+		}
 	}
 //	@Override
 //	public Player login(String email, String password) {

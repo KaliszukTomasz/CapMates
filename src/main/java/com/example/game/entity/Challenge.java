@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Challenge {
 
-	private static Long staticId;
+
 	private Long id;
 	private LocalDateTime date;
 	private String gameTitle;
@@ -12,10 +12,7 @@ public class Challenge {
 	private Integer score;
 	
 
-	public Challenge() {
-		id = staticId;
-		staticId++;
-	}
+
 
 	
 	public Challenge(Long id, LocalDateTime date, String gameTitle, Long playerId, Integer score) {
