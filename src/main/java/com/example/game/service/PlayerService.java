@@ -21,8 +21,8 @@ public interface PlayerService {
 //	Player getMyProfile(Long playerId);
 	PlayerProfile editMyProfile(Long playerId, PlayerProfile playerProfil);
 	void addMyAvailabilityTime(Long playerId, PlayerAvailability availabilityTime);
-	void editMyAvailabilityTime (Long playerId, PlayerAvailability availabilityTime);
-	Player login(String email, String password);
+	void eraseMyAvailabilityTime (Long playerId, PlayerAvailability availabilityTime);
+//	Player login(String email, String password);
 	List<Challenge> getMyChallengeHistory(Long playerId);
 	void addNewGameToMyGames(Long playerId, String gameTitle, Integer numberOfPlayers);
 	

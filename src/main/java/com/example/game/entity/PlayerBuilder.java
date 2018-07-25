@@ -1,5 +1,6 @@
 package com.example.game.entity;
 
+import java.util.List;
 import java.util.Set;
 
 public class PlayerBuilder {
@@ -11,7 +12,7 @@ public class PlayerBuilder {
 	private String motto;
 	private Statistic statistic;
 	private PlayerLevel level;
-	private PlayerAvailability playerAvailability;
+	private List<PlayerAvailability> playerAvailabilityList;
 	private Set<Game> games;
 
 	public PlayerBuilder setId(Long id) {
@@ -54,8 +55,8 @@ public class PlayerBuilder {
 		return this;
 	}
 
-	public PlayerBuilder setPlayerAvailability(PlayerAvailability playerAvailability) {
-		this.playerAvailability = playerAvailability;
+	public PlayerBuilder setPlayerAvailabilityList(List<PlayerAvailability> playerAvailabilityList) {
+		this.playerAvailabilityList = playerAvailabilityList;
 		return this;
 	}
 
@@ -65,6 +66,6 @@ public class PlayerBuilder {
 	}
 
 	public Player build() {
-		return new Player(id, firstName, lastName, email, password, motto, statistic, level, playerAvailability, games);
+		return new Player(id, firstName, lastName, email, password, motto, statistic, level, playerAvailabilityList, games);
 	}
 }

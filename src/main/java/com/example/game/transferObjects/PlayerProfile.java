@@ -1,6 +1,8 @@
 package com.example.game.transferObjects;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -22,7 +24,7 @@ public class PlayerProfile {
 	private Statistic statistic;
 	private Ranking ranking;
 	private PlayerLevel level;
-	private PlayerAvailability playerAvailability;
+	private List<PlayerAvailability> playerAvailabilityList = new ArrayList<>();
 	private Set<Game> games = new HashSet<>();
 	// private List<GameHistory> gameHistories = new ArrayList<>();
 
@@ -93,12 +95,12 @@ public class PlayerProfile {
 		this.level = level;
 	}
 
-	public PlayerAvailability getPlayerAvailability() {
-		return playerAvailability;
+	public List<PlayerAvailability> getPlayerAvailabilityList() {
+		return playerAvailabilityList;
 	}
 
-	public void setPlayerAvailability(PlayerAvailability playerAvailability) {
-		this.playerAvailability = playerAvailability;
+	public void setPlayerAvailabilityList(List<PlayerAvailability> playerAvailabilityList) {
+		this.playerAvailabilityList = playerAvailabilityList;
 	}
 
 	public Set<Game> getGames() {

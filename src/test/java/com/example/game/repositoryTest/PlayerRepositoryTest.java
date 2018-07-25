@@ -46,9 +46,10 @@ public class PlayerRepositoryTest {
 
 	@Test
 	public void shouldEditPlayer() {
+		
 		Player newPlayer = new PlayerBuilder().setFirstName("Tome").setEmail("tomek1@wp.pl").setLastName("Pierwszy")
-				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password")
-				.setPlayerAvailability(new PlayerAvailability()).setId(3L).build();
+				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setPlayerAvailabilityList(null)
+				.setId(3L).build();
 		assertEquals("Romek", playerRepositoryImpl.getPlayer(3L).getFirstName());
 		playerRepositoryImpl.editPlayer(newPlayer);
 		assertEquals("Tome", playerRepositoryImpl.getPlayer(3L).getFirstName());
@@ -60,7 +61,7 @@ public class PlayerRepositoryTest {
 
 		Player player = new PlayerBuilder().setFirstName("Tome").setEmail("tomek1@wp.pl").setLastName("Pierwszy")
 				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password")
-				.setPlayerAvailability(new PlayerAvailability()).setId(2L).build();
+				.setPlayerAvailabilityList(null).setId(2L).build();
 		playerRepositoryImpl.addPlayer(player);
 		
 
@@ -71,7 +72,7 @@ public class PlayerRepositoryTest {
 
 		Player player = new PlayerBuilder().setFirstName("Tome").setEmail("tomek100@wp.pl").setLastName("Pierwszy")
 				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password")
-				.setPlayerAvailability(new PlayerAvailability()).setId(6L).build();
+				.setPlayerAvailabilityList(null).setId(6L).build();
 		assertEquals(5, playerRepositoryImpl.getPlayers().size());
 		playerRepositoryImpl.addPlayer(player);
 		assertEquals(6, playerRepositoryImpl.getPlayers().size());

@@ -6,6 +6,7 @@ public class PlayerLevel {
 	private Integer currentExp;
 	private static final Integer EXP_TO_NEXT_LVL = 1000;
 
+	public PlayerLevel(){}
 	
 	public Integer getLevel() {
 		return level;

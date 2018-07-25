@@ -77,7 +77,7 @@ public class PlayerServiceImpl implements PlayerService {
 		player.setLastName(playerProfil.getLastName());
 		player.setGames(playerProfil.getGames());
 		player.setMotto(playerProfil.getMotto());
-		player.setPlayerAvailability(playerProfil.getPlayerAvailability());
+		player.setPlayerAvailabilityList(playerProfil.getPlayerAvailabilityList());
 		
 		playerRepository.editPlayer(player);
 		return getMyProfile(playerId);
@@ -90,8 +90,8 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 	@Override
-	public void editMyAvailabilityTime(Long playerId, PlayerAvailability availabilityTime) {
-		playerRepository.editHoursAvailability(availabilityTime.getStartTime(), availabilityTime.getEndTime(),
+	public void eraseMyAvailabilityTime(Long playerId, PlayerAvailability availabilityTime) {
+		playerRepository.eraseHoursAvailability(availabilityTime.getStartTime(), availabilityTime.getEndTime(),
 				playerId);
 
 	}
@@ -109,4 +109,6 @@ public class PlayerServiceImpl implements PlayerService {
 //
 //		return player;
 //	}
+
+	
 }

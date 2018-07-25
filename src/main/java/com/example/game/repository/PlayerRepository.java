@@ -1,5 +1,6 @@
 package com.example.game.repository;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
@@ -14,11 +15,9 @@ public interface PlayerRepository {
 
 	Long editPlayer(Player player);
 
-	void addHoursAvailability(String timeFrom, String timeTo, Long playerId);
+	void addHoursAvailability(Instant timeFrom, Instant timeTo, Long playerId);
 
-	void editHoursAvailability(String timeFrom, String timeTo, Long playerId);
-
-	String getHoursAvailability(Long playerId);
+	void eraseHoursAvailability(Instant timeFrom, Instant timeTo, Long playerId);
 
 	Statistic getStatistics(Long playerId);
 
@@ -34,7 +33,7 @@ public interface PlayerRepository {
 
 	Statistic getPlayerStaistics(Long playerId);
 
-	PlayerAvailability getPlayerAvailability(Long playerId);
+	List<PlayerAvailability> getPlayerAvailabilityList(Long playerId);
 
 	List<Player> getPlayers();
 

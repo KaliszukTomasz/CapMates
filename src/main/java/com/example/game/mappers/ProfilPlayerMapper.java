@@ -21,7 +21,7 @@ public class ProfilPlayerMapper {
 		playerProfil.setStatistic(player.getStatistic());
 		playerProfil.setGames(player.getGames());
 		playerProfil.setMotto(player.getMotto());
-		playerProfil.setPlayerAvailability(player.getPlayerAvailability());
+		playerProfil.setPlayerAvailabilityList(player.getPlayerAvailabilityList());
 				
 		return playerProfil;
 	}

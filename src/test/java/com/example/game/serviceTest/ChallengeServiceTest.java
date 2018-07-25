@@ -1,6 +1,6 @@
 package com.example.game.serviceTest;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,18 +26,29 @@ public class ChallengeServiceTest {
 
 	@Autowired
 	ChallengeRepositoryImpl challengeRepositoryImpl;
-	
+
 	@Autowired
 	ChallengeSeviceImpl challengeServiceImpl;
-	
+
 	@Test
-	public void shouldShowRankingPointsFromOnePlayer(){
+	public void shouldShowRankingPointsFromOnePlayer() {
 		Ranking ranking = challengeServiceImpl.getPlayerRankingInOneGame(0L, "Chess");
-		assertTrue(21  == ranking.getPoints());
-		
+		assertTrue(21 == ranking.getPoints());
+
 		Ranking ranking2 = challengeServiceImpl.getPlayerRankingInOneGame(0L, "Monopoly");
-		assertTrue(10  == ranking2.getPoints());
+		assertTrue(10 == ranking2.getPoints());
 	}
-	
-	
+
+	@Test
+	public void shouldShowRankingPositionOnePlayerInOneGame() {
+		int rankingPosition = challengeServiceImpl.getPlayerPositionInRankingInOneGame(3L, "Chess");
+		assertEquals(1, rankingPosition);
+	}
+
+	@Test
+	public void shouldShowRankingSecoundPositionOnePlayerInOneGame() {
+		int rankingPosition = challengeServiceImpl.getPlayerPositionInRankingInOneGame(1L, "Chess");
+		assertEquals(2, rankingPosition);
+	}
+
 }

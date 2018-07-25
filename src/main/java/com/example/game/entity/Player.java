@@ -1,11 +1,11 @@
 package com.example.game.entity;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import com.example.game.exceptions.NoGamesAddedToThisAccountPlayerException;
+import com.example.game.exceptions.PlayerAvailabilityListIsEmptyException;
 
 public class Player {
 
@@ -19,17 +19,17 @@ public class Player {
 	private Statistic statistic;
 	// private Ranking ranking;
 	private PlayerLevel level;
-	private PlayerAvailability playerAvailability;
+	private List<PlayerAvailability> playerAvailabilityList = Collections.emptyList();
 	private Set<Game> games = Collections.emptySet();
 	// private List<GameHistory> gameHistories = new ArrayList<>();
 
-	public Player() { // TODO wszystkie setId -> this.id = id powinno wylecieć?
+	public Player() {
 		id = staticId;
 		staticId++;
 	}
 
 	public Player(Long id, String firstName, String lastName, String email, String password, String motto,
-			Statistic statistic, PlayerLevel level, PlayerAvailability playerAvailability, Set<Game> games) {
+			Statistic statistic, PlayerLevel level, List<PlayerAvailability> playerAvailabilityList, Set<Game> games) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -39,7 +39,7 @@ public class Player {
 		this.statistic = statistic;
 		// this.ranking = ranking;
 		this.level = level;
-		this.playerAvailability = playerAvailability;
+		this.playerAvailabilityList = playerAvailabilityList;
 		this.games = games;
 		// this.gameHistories = gameHistories;
 	}
@@ -100,14 +100,6 @@ public class Player {
 		this.statistic = statistic;
 	}
 
-	// public Ranking getRanking() {
-	// return ranking;
-	// }
-	//
-	// public void setRanking(Ranking ranking) {
-	// this.ranking = ranking;
-	// }
-
 	public PlayerLevel getLevel() {
 		return level;
 	}
@@ -116,39 +108,24 @@ public class Player {
 		this.level = level;
 	}
 
-	// public List<GameHistory> getGameHistories() {
-	// return gameHistories;
-	// }
-	//
-	// public void setGameHistories(List<GameHistory> gameHistories) {
-	// this.gameHistories = gameHistories;
-	// }
-
-	public static Long getStaticId() {
-		return staticId;
+	public List<PlayerAvailability> getPlayerAvailabilityList() {
+		if (this.playerAvailabilityList == null) {
+			throw new PlayerAvailabilityListIsEmptyException();
+		} else {
+			return playerAvailabilityList;
+		}
 	}
 
-	public static void setStaticId(Long staticId) {
-		Player.staticId = staticId;
-	}
-
-	public PlayerAvailability getPlayerAvailability() {
-		return playerAvailability;
-	}
-
-	public void setPlayerAvailability(PlayerAvailability playerAvailability) {
-		this.playerAvailability = playerAvailability;
+	public void setPlayerAvailabilityList(List<PlayerAvailability> playerAvailabilityList) {
+		this.playerAvailabilityList = playerAvailabilityList;
 	}
 
 	public Set<Game> getGames() {
-//		if (this.games != null) {
-			return games;
-//		} else {
-//			throw new NoGamesAddedToThisAccountPlayerException("GameSet this Player is empty!");
-//		}
+		return games;
 	}
 
 	public void setGames(Set<Game> games) {
 		this.games = games;
 	}
+
 }

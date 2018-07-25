@@ -1,6 +1,8 @@
 package com.example.game.repository;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -33,21 +35,23 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 	public PlayerRepositoryImpl() {
 		Set<Game> secik = new HashSet<>();
 		secik.add(new Game("Splendor", 4));
+		List<PlayerAvailability> availabilityList = new ArrayList<>();
+		availabilityList.add(new PlayerAvailability(Instant.now(), Instant.now()));
 		players.add(new PlayerBuilder().setFirstName("Tomek").setEmail("tomek1@wp.pl").setLastName("Pierwszy")
 				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setGames(secik).
-				setPlayerAvailability(new PlayerAvailability()).setId(0L).setStatistic(new Statistic()).build());
+				setPlayerAvailabilityList(availabilityList).setId(0L).setStatistic(new Statistic()).build());
 		players.add(new PlayerBuilder().setFirstName("Zosia").setEmail("tomek2@wp.pl").setLastName("Pierwszy")
 				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password")
-				.setPlayerAvailability(new PlayerAvailability()).setId(1L).build());
+				.setPlayerAvailabilityList(null).setId(1L).build());
 		players.add(new PlayerBuilder().setFirstName("Kasia").setEmail("tomek3@wp.pl").setLastName("Pierwszy")
 				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password")
-				.setPlayerAvailability(new PlayerAvailability()).setId(2L).build());
+				.setPlayerAvailabilityList(availabilityList).setId(2L).build());
 		players.add(new PlayerBuilder().setFirstName("Romek").setEmail("tomek4@wp.pl").setLastName("Pierwszy")
 				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password")
-				.setPlayerAvailability(new PlayerAvailability()).setId(3L).build());
+				.setPlayerAvailabilityList(availabilityList).setId(3L).build());
 		players.add(new PlayerBuilder().setFirstName("Zuzia").setEmail("tomek5@wp.pl").setLastName("Pierwszy")
 				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password")
-				.setPlayerAvailability(new PlayerAvailability()).setId(4L).build());
+				.setPlayerAvailabilityList(availabilityList).setId(4L).build());
 	}
 
 	@Override
@@ -84,34 +88,34 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 	}
 
 	@Override//TODO
-	public void addHoursAvailability(String timeFrom, String timeTo, Long playerId) {
+	public void addHoursAvailability(Instant timeFrom, Instant timeTo, Long playerId) {
 		Player player = getPlayer(playerId);
 		PlayerAvailability playerAvailability = new PlayerAvailability();
 		playerAvailability.setStartTime(timeFrom);
 		playerAvailability.setEndTime(timeTo);
-		player.setPlayerAvailability(playerAvailability);
+		player.getPlayerAvailabilityList().add(playerAvailability);
 	}
 
 	@Override//TODO
-	public void editHoursAvailability(String timeFrom, String timeTo, Long playerId) {
+	public void eraseHoursAvailability(Instant timeFrom, Instant timeTo, Long playerId) {
 		Player player = getPlayer(playerId);
-		PlayerAvailability playerAvailability = player.getPlayerAvailability();
+		PlayerAvailability playerAvailability = new PlayerAvailability();
 		playerAvailability.setEndTime(timeTo);
 		playerAvailability.setStartTime(timeFrom);
-		player.setPlayerAvailability(playerAvailability);
-	}
+		player.getPlayerAvailabilityList().removeIf(time -> time.getStartTime().equals(timeFrom)&&time.getEndTime().equals(timeTo));
+//		for(PlayerAvailability availability : player.getPlayerAvailabilityList()){
+//			if(availability.getStartTime().equals(timeFrom) && availability.getEndTime().equals(timeTo)){
+//				player.getPlayerAvailabilityList().remove(availability);
+//			}
+		}
+	
+
+	
 
 	@Override
-	public String getHoursAvailability(Long playerId) {
-		String startTime = getPlayer(playerId).getPlayerAvailability().getStartTime();
-		String endTime = getPlayer(playerId).getPlayerAvailability().getEndTime();
-		return "Hours avaliability: " + startTime + " - " + endTime;
-	}
-
-	@Override
-	public PlayerAvailability getPlayerAvailability(Long playerId) {
+	public List<PlayerAvailability> getPlayerAvailabilityList(Long playerId) {
 		Player player = getPlayer(playerId);
-		return player.getPlayerAvailability();
+		return player.getPlayerAvailabilityList();
 	}
 
 	@Override
