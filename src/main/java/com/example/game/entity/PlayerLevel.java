@@ -6,8 +6,9 @@ public class PlayerLevel {
 	private Integer currentExp;
 	private static final Integer EXP_TO_NEXT_LVL = 1000;
 
-	public PlayerLevel(){}
-	
+	public PlayerLevel() {
+	}
+
 	public Integer getLevel() {
 		return level;
 	}
@@ -17,9 +18,9 @@ public class PlayerLevel {
 	}
 
 	public Integer getCurrentExp() {
-		if(this.currentExp == null){
-			return 0 ;
-		}else{
+		if (this.currentExp == null) {
+			return 0;
+		} else {
 			return currentExp;
 		}
 	}

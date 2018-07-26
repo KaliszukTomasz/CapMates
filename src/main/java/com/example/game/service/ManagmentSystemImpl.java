@@ -1,7 +1,6 @@
 package com.example.game.service;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.enums.Status;
-import com.example.game.entity.Game;
 import com.example.game.entity.Meeting;
 import com.example.game.entity.Player;
 import com.example.game.entity.PlayerAvailability;
@@ -70,30 +68,6 @@ public class ManagmentSystemImpl implements ManagementSystem {
 		}
 
 		return listOfPossibleMeetings;
-		// TODO Auto-generated method stub
-
 	}
 
-	@Override
-	public void addGameToHistory(LocalDateTime date, Game game, Long winnerId, List<Long> lostId) {
-		// TODO Auto-generated method stub
-
-	}
-
-	// @Override
-	// public void addChallengeToHistory(LocalDateTime date, Game game, Long
-	// winnerId, List<Long> lostId) {
-	// GameHistory gameHistory = new GameHistory();
-	// gameHistory.setDate(date);
-	// gameHistory.setGame(game);
-	// gameHistory.setWinnerId(winnerId);
-	// gameHistory.setLostId(lostId);
-	// database.getGameHistories().add(gameHistory);
-	//
-	// }private static Long staticId;
-	// private Long id;
-	// private LocalDateTime date;
-	// private Long gameId;
-	// private Long playerId;
-	// private Integer score;
 }

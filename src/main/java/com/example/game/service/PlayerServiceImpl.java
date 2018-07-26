@@ -12,10 +12,13 @@ import com.example.game.entity.Game;
 import com.example.game.entity.Player;
 import com.example.game.entity.PlayerAvailability;
 import com.example.game.entity.Statistic;
+import com.example.game.mappers.ChallengeHistoryMapper;
 import com.example.game.mappers.ProfilPlayerMapper;
 import com.example.game.repository.ChallengeRepository;
 import com.example.game.repository.GameTypeRepository;
 import com.example.game.repository.PlayerRepository;
+import com.example.game.transferObjects.AvailabilityTimeTO;
+import com.example.game.transferObjects.ChallengeTO;
 import com.example.game.transferObjects.PlayerProfile;
 
 @Service
@@ -23,16 +26,19 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Autowired
 	private PlayerRepository playerRepository;
-	
+
 	@Autowired
 	private ChallengeRepository challengeRepository;
 
 	@Autowired
 	private ProfilPlayerMapper profilPlayerMapper;
-	
+
 	@Autowired
 	private GameTypeRepository gameTypeRepository;
-	
+
+	@Autowired
+	private ChallengeHistoryMapper challengeHistoryMapper;
+
 	@Override
 	public Statistic getStatistic(Long playerId) {
 		return playerRepository.getPlayerStaistics(playerId);
@@ -43,15 +49,21 @@ public class PlayerServiceImpl implements PlayerService {
 		return playerRepository.getActualPlayerLevel(playerId);
 	}
 
-	
 	@Override
-	public List<Challenge> getMyChallengeHistory(Long playerId) {
-		return challengeRepository.getPlayerAllChallengeHistory(playerId);
+	public List<ChallengeTO> getMyChallengeHistory(Long playerId) {
+		List<Challenge> challengeList = challengeRepository.getPlayerAllChallengeHistory(playerId);
+		List<ChallengeTO> challengeToList = challengeHistoryMapper.mapChallengeHistory(challengeList);
+		return challengeToList;
 	}
 
 	@Override
 	public Set<Game> getMyGames(Long playerId) {
 		return playerRepository.getPlayerGames(playerId);
+	}
+
+	@Override
+	public Set<Game> getAllGamesInCollection() {
+		return gameTypeRepository.getGamesContainer();
 	}
 
 	@Override
@@ -69,7 +81,7 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 	@Override
-	public PlayerProfile getMyProfile(Long playerId) { 
+	public PlayerProfile getMyProfile(Long playerId) {
 		Player player = playerRepository.getPlayer(playerId);
 		return profilPlayerMapper.mapToPlayerProfile(player);
 	}
@@ -81,52 +93,64 @@ public class PlayerServiceImpl implements PlayerService {
 		player.setLastName(playerProfil.getLastName());
 		player.setGames(playerProfil.getGames());
 		player.setMotto(playerProfil.getMotto());
-		player.setPlayerAvailabilityList(playerProfil.getPlayerAvailabilityList());
 		
 		playerRepository.editPlayer(player);
 		return getMyProfile(playerId);
 	}
-
+	
 	@Override
-	public void addMyAvailabilityTime(Long playerId, PlayerAvailability availabilityTime) {
-		playerRepository.addHoursAvailability(availabilityTime, playerId);
-
+	public void changeMyPassword(Long playerId, PlayerProfile playerProfile){
+		Player player = playerRepository.getPlayer(playerId);
+		player.setPassword(playerProfile.getPassword());
 	}
 
 	@Override
-	public void eraseMyAvailabilityTime(Long playerId, PlayerAvailability availabilityTime) {
-		playerRepository.eraseHoursAvailability(availabilityTime.getStartTime(), availabilityTime.getEndTime(),
+	public void addMyAvailabilityTime(Long playerId, AvailabilityTimeTO availabilityTimeTO) {
+		
+		PlayerAvailability availabilityTime = new PlayerAvailability();
+		availabilityTime.setEndTime(availabilityTimeTO.getEndTime());
+		availabilityTime.setStartTime(availabilityTimeTO.getStartTime());
+		
+		
+		playerRepository.addHoursAvailability(availabilityTime, playerId);
+	}
+
+	@Override
+	public void eraseMyAvailabilityTime(Long playerId, AvailabilityTimeTO availabilityTimeTO) {
+		playerRepository.eraseHoursAvailability(availabilityTimeTO.getStartTime(), availabilityTimeTO.getEndTime(),
 				playerId);
 
 	}
-	
+
 	@Override
-	public void changeStatusToOfflineOnMyAvailabilityTimeAndLeaveMessage(Long playerId, PlayerAvailability availabilityTime, String message){
+	public void changeStatusToOfflineOnMyAvailabilityTimeAndLeaveMessage(Long playerId,
+			AvailabilityTimeTO availabilityTimeTO, String message) {
 		Player player = playerRepository.getPlayer(playerId);
-		
-		for(PlayerAvailability availability : player.getPlayerAvailabilityList()){
-			if(availability.getStartTime().equals(availabilityTime.getStartTime())
-					&& availability.getEndTime().equals(availabilityTime.getEndTime())){
+
+		for (PlayerAvailability availability : player.getPlayerAvailabilityList()) {
+			if (availability.getStartTime().equals(availabilityTimeTO.getStartTime())
+					&& availability.getEndTime().equals(availabilityTimeTO.getEndTime())) {
 				availability.setStatus(Status.OFFLINE);
 				availability.setMessage(message);
 			}
-			
+
 		}
 	}
-//	@Override
-//	public Player login(String email, String password) {
-//		Optional<Player> actualPlayer = playerRepository.getPlayers().stream().filter(gamer -> gamer.getEmail().equals(email))
-//				.findFirst();
-//		if (!actualPlayer.isPresent()) {
-//			throw new UnauthorizedLoginException("Email doeasnt exist!");
-//		}
-//		Player player = actualPlayer.get();
-//		if (!player.getPassword().equals(password)) {
-//			throw new UnauthorizedLoginException("Password is incorrect!");
-//		}
-//
-//		return player;
-//	}
+	// @Override
+	// public Player login(String email, String password) {
+	// Optional<Player> actualPlayer =
+	// playerRepository.getPlayers().stream().filter(gamer ->
+	// gamer.getEmail().equals(email))
+	// .findFirst();
+	// if (!actualPlayer.isPresent()) {
+	// throw new UnauthorizedLoginException("Email doeasnt exist!");
+	// }
+	// Player player = actualPlayer.get();
+	// if (!player.getPassword().equals(password)) {
+	// throw new UnauthorizedLoginException("Password is incorrect!");
+	// }
+	//
+	// return player;
+	// }
 
-	
 }

@@ -8,11 +8,10 @@ import com.example.game.transferObjects.PlayerProfile;
 @Component
 public class ProfilPlayerMapper {
 
-	
 	public PlayerProfile mapToPlayerProfile(Player player) {
 
 		PlayerProfile playerProfil = new PlayerProfile();
-				
+
 		playerProfil.setId(player.getId());
 		playerProfil.setFirstName(player.getFirstName());
 		playerProfil.setLastName(player.getLastName());
@@ -22,7 +21,7 @@ public class ProfilPlayerMapper {
 		playerProfil.setGames(player.getGames());
 		playerProfil.setMotto(player.getMotto());
 		playerProfil.setPlayerAvailabilityList(player.getPlayerAvailabilityList());
-				
+		
 		return playerProfil;
 	}
 }

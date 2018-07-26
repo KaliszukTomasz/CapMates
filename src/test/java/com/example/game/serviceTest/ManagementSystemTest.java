@@ -19,6 +19,7 @@ import com.example.game.repository.PlayerRepositoryImpl;
 import com.example.game.service.ChallengeSeviceImpl;
 import com.example.game.service.ManagementSystem;
 import com.example.game.service.PlayerServiceImpl;
+import com.example.game.transferObjects.AvailabilityTimeTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -51,18 +52,12 @@ public class ManagementSystemTest {
 		Instant instant10 = Instant.parse("2018-07-04T18:16:00.00Z");
 		Instant instant11 = Instant.parse("2018-07-04T19:00:00.00Z");
 		Instant instant12 = Instant.parse("2018-07-04T20:17:00.00Z");
-		PlayerAvailability playerAvailability1 = new PlayerAvailability(instant1, instant2);
-		PlayerAvailability playerAvailability2 = new PlayerAvailability(instant3, instant4);
-		PlayerAvailability playerAvailability3 = new PlayerAvailability(instant5, instant6);
-		PlayerAvailability playerAvailability4 = new PlayerAvailability(instant7, instant8);
-		PlayerAvailability playerAvailability5 = new PlayerAvailability(instant9, instant10);
-		PlayerAvailability playerAvailability6 = new PlayerAvailability(instant11, instant12);
-//		playerRepositoryImpl.getPlayerAvailabilityList(0L).clear();
-//		playerRepositoryImpl.getPlayerAvailabilityList(1L).clear();
-//		playerRepositoryImpl.getPlayerAvailabilityList(2L).clear();
-//		playerRepositoryImpl.getPlayerAvailabilityList(3L).clear();
-//		playerRepositoryImpl.getPlayerAvailabilityList(4L).clear();
-
+		AvailabilityTimeTO playerAvailability1 = new AvailabilityTimeTO(instant1, instant2);
+		AvailabilityTimeTO playerAvailability2 = new AvailabilityTimeTO(instant3, instant4);
+		AvailabilityTimeTO playerAvailability3 = new AvailabilityTimeTO(instant5, instant6);
+		AvailabilityTimeTO playerAvailability4 = new AvailabilityTimeTO(instant7, instant8);
+		AvailabilityTimeTO playerAvailability5 = new AvailabilityTimeTO(instant9, instant10);
+		AvailabilityTimeTO playerAvailability6 = new AvailabilityTimeTO(instant11, instant12);
 		playerServiceImpl.addMyAvailabilityTime(0L, playerAvailability1);
 		playerServiceImpl.addMyAvailabilityTime(1L, playerAvailability2);
 		playerServiceImpl.addMyAvailabilityTime(2L, playerAvailability3);

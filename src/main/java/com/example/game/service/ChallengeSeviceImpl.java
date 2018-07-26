@@ -2,7 +2,6 @@ package com.example.game.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +48,9 @@ public class ChallengeSeviceImpl implements ChallengeService {
 			} catch (NoChallegnesThisGameThisPlayerException e) {
 			}
 		}
-//		Comparator<Ranking> compar = (Ranking o1, Ranking o2) -> o1.getPoints().compareTo(o2.getPoints());
-//		Collections.sort(rankingList, compar);
 		rankingList.sort((Integer a, Integer b) -> a.compareTo(b));
 		Collections.reverse(rankingList);
 		Integer rankingPosition = rankingList.indexOf(getPlayerRankingInOneGame(playerId, gameTitle).getPoints());
-		return rankingPosition+1;
-	}// co jeśli nie grał w daną grę?
+		return rankingPosition + 1;
+	}
 }

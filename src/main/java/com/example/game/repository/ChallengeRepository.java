@@ -6,12 +6,10 @@ import com.example.game.entity.Challenge;
 
 public interface ChallengeRepository {
 
-	//Ranking getPlayerRankingInOneGame(Long playerId, Long gameId);
+	// Ranking getPlayerRankingInOneGame(Long playerId, Long gameId);
 
 	List<Challenge> getPlayerAllChallengeHistory(Long playerId);
 
 	List<Challenge> getPlayerOneGameChallengeHistory(Long playerId, String gameTitle);
-	
-	
 
 }

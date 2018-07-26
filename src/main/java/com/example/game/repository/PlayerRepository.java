@@ -7,7 +7,6 @@ import java.util.Set;
 import com.example.game.entity.Game;
 import com.example.game.entity.Player;
 import com.example.game.entity.PlayerAvailability;
-import com.example.game.entity.PlayerLevel;
 import com.example.game.entity.Statistic;
 
 public interface PlayerRepository {
@@ -40,5 +39,4 @@ public interface PlayerRepository {
 
 	void setPlayers(List<Player> players);
 
-	
 }

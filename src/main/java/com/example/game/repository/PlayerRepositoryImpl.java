@@ -2,7 +2,6 @@ package com.example.game.repository;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -38,20 +37,20 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 		List<PlayerAvailability> availabilityList = new ArrayList<>();
 		availabilityList.add(new PlayerAvailability(Instant.now(), Instant.now()));
 		players.add(new PlayerBuilder().setFirstName("Tomek").setEmail("tomek1@wp.pl").setLastName("Pierwszy")
-				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setGames(secik).
-				setPlayerAvailabilityList(null).setId(0L).setStatistic(new Statistic()).build());
+				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setGames(secik)
+				.setPlayerAvailabilityList(null).setId(0L).setStatistic(new Statistic()).build());
 		players.add(new PlayerBuilder().setFirstName("Zosia").setEmail("tomek2@wp.pl").setLastName("Pierwszy")
-				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password")
-				.setPlayerAvailabilityList(null).setId(1L).build());
+				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setPlayerAvailabilityList(null)
+				.setId(1L).build());
 		players.add(new PlayerBuilder().setFirstName("Kasia").setEmail("tomek3@wp.pl").setLastName("Pierwszy")
-				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password")
-				.setPlayerAvailabilityList(null).setId(2L).build());
+				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setPlayerAvailabilityList(null)
+				.setId(2L).build());
 		players.add(new PlayerBuilder().setFirstName("Romek").setEmail("tomek4@wp.pl").setLastName("Pierwszy")
-				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password")
-				.setPlayerAvailabilityList(null).setId(3L).build());
+				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setPlayerAvailabilityList(null)
+				.setId(3L).build());
 		players.add(new PlayerBuilder().setFirstName("Zuzia").setEmail("tomek5@wp.pl").setLastName("Pierwszy")
-				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password")
-				.setPlayerAvailabilityList(null).setId(4L).build());
+				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setPlayerAvailabilityList(null)
+				.setId(4L).build());
 	}
 
 	@Override
@@ -87,7 +86,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 		return actualPlayer.getId();
 	}
 
-	@Override//TODO
+	@Override // TODO
 	public void addHoursAvailability(PlayerAvailability playerAvailability, Long playerId) {
 		Player player = getPlayer(playerId);
 		PlayerAvailability playerAvail = new PlayerAvailability();
@@ -98,21 +97,15 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 		player.getPlayerAvailabilityList().add(playerAvail);
 	}
 
-	@Override//TODO
+	@Override 
 	public void eraseHoursAvailability(Instant timeFrom, Instant timeTo, Long playerId) {
 		Player player = getPlayer(playerId);
 		PlayerAvailability playerAvailability = new PlayerAvailability();
 		playerAvailability.setEndTime(timeTo);
 		playerAvailability.setStartTime(timeFrom);
-		player.getPlayerAvailabilityList().removeIf(time -> time.getStartTime().equals(timeFrom)&&time.getEndTime().equals(timeTo));
-//		for(PlayerAvailability availability : player.getPlayerAvailabilityList()){
-//			if(availability.getStartTime().equals(timeFrom) && availability.getEndTime().equals(timeTo)){
-//				player.getPlayerAvailabilityList().remove(availability);
-//			}
-		}
-	
-
-	
+		player.getPlayerAvailabilityList()
+				.removeIf(time -> time.getStartTime().equals(timeFrom) && time.getEndTime().equals(timeTo));
+	}
 
 	@Override
 	public List<PlayerAvailability> getPlayerAvailabilityList(Long playerId) {
@@ -130,10 +123,10 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 	public Integer getActualPlayerLevel(Long playerId) {
 		Player player = getPlayer(playerId);
 		PlayerLevel playerLevel = new PlayerLevel();
-		for(Challenge challenge : challengeRepository.getPlayerAllChallengeHistory(playerId)){
-			playerLevel.setCurrentExp(playerLevel.getCurrentExp()+challenge.getScore()*10);
+		for (Challenge challenge : challengeRepository.getPlayerAllChallengeHistory(playerId)) {
+			playerLevel.setCurrentExp(playerLevel.getCurrentExp() + challenge.getScore() * 10);
 		}
-		playerLevel.setLevel(playerLevel.getCurrentExp()/playerLevel.getExpToNextLvl() +1);
+		playerLevel.setLevel(playerLevel.getCurrentExp() / playerLevel.getExpToNextLvl() + 1);
 		player.setLevel(playerLevel);
 		return playerLevel.getLevel();
 	}
@@ -157,12 +150,12 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 	@Override
 	public void eraseGameFromPlayerGames(Long playerId, String gameTitle) {
 		Player player = getPlayer(playerId);
-		
+
 		Set<Game> gameSet = player.getGames();
 		if (gameSet.stream().anyMatch(game -> game.getTitle().equals(gameTitle))) {
 			gameSet.removeIf(game -> game.getTitle().equals(gameTitle));
 		}
-		
+
 	}
 
 	@Override
@@ -170,7 +163,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 		Player player = getPlayer(playerId);
 		Set<Game> gameSet = player.getGames();
 		gameSet.add(game);
-		
+
 	}
 
 	@Override
@@ -189,5 +182,4 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 
 	}
 
-	
 }

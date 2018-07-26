@@ -1,12 +1,11 @@
 package com.example.game.serviceTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
-import org.assertj.core.api.InstantAssert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +14,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.enums.Status;
 import com.example.game.entity.Challenge;
-import com.example.game.entity.Game;
-import com.example.game.entity.PlayerAvailability;
-import com.example.game.entity.Ranking;
-import com.example.game.exceptions.PlayerAvailabilityListIsEmptyException;
 import com.example.game.repository.ChallengeRepositoryImpl;
 import com.example.game.repository.GameTypeRepositoryImpl;
 import com.example.game.repository.PlayerRepositoryImpl;
-import com.example.game.service.ChallengeSeviceImpl;
 import com.example.game.service.PlayerServiceImpl;
-import com.example.game.validators.AvailabilityTimeValidator;
+import com.example.game.transferObjects.AvailabilityTimeTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -41,6 +35,18 @@ public class PlayerServiceTest {
 
 	@Autowired
 	PlayerServiceImpl playerServiceImpl;
+
+	@Test
+	public void shouldTakeListOfChallengeTO() {
+		challengeRepositoryImpl.addChallenge(new Challenge(10L, LocalDateTime.now(), "monopol01", 5L, 10));
+		challengeRepositoryImpl.addChallenge(new Challenge(11L, LocalDateTime.now(), "monopol02", 5L, 1));
+		challengeRepositoryImpl.addChallenge(new Challenge(12L, LocalDateTime.now(), "monopol03", 5L, 10));
+		challengeRepositoryImpl.addChallenge(new Challenge(13L, LocalDateTime.now(), "monopol04", 5L, 10));
+		assertEquals(4, (int) playerServiceImpl.getMyChallengeHistory(5L).size());
+		assertEquals("monopol02", playerServiceImpl.getMyChallengeHistory(5L).get(1).getGameTitle());
+		assertTrue(5L == playerServiceImpl.getMyChallengeHistory(5L).get(1).getPlayerId());
+		assertTrue(1 == playerServiceImpl.getMyChallengeHistory(5L).get(1).getScore());
+	}
 
 	@Test
 	public void shouldTakeActualPlayerLevel() {
@@ -80,7 +86,7 @@ public class PlayerServiceTest {
 
 	@Test
 	public void shouldAddNewHoursAndEraseToAvailabilityPlayer() {
-		PlayerAvailability availabilityTime = new PlayerAvailability();
+		AvailabilityTimeTO availabilityTime = new AvailabilityTimeTO();
 		availabilityTime.setStartTime(Instant.now().plusSeconds(3600));
 		availabilityTime.setEndTime(Instant.now().plusSeconds(7200));
 		assertEquals(0, playerRepositoryImpl.getPlayer(0L).getPlayerAvailabilityList().size());
@@ -94,14 +100,17 @@ public class PlayerServiceTest {
 	@Test
 	public void shouldChangeStatusToOfflineAndSetMessageTest() {
 		playerRepositoryImpl.getPlayerAvailabilityList(3L).clear();
-		playerServiceImpl.addMyAvailabilityTime(3L, new PlayerAvailability(Instant.ofEpochSecond(1230000000), Instant.ofEpochSecond(1230003600)));
+		playerServiceImpl.addMyAvailabilityTime(3L,
+				new AvailabilityTimeTO(Instant.ofEpochSecond(1230000000), Instant.ofEpochSecond(1230003600)));
 		assertEquals(1, playerRepositoryImpl.getPlayerAvailabilityList(3L).size());
 		assertEquals(Status.ONLINE, playerRepositoryImpl.getPlayerAvailabilityList(3L).get(0).getStatus());
 		assertEquals("", playerRepositoryImpl.getPlayerAvailabilityList(3L).get(0).getMessage());
-		playerServiceImpl.changeStatusToOfflineOnMyAvailabilityTimeAndLeaveMessage(3L, new PlayerAvailability(Instant.ofEpochSecond(1230000000), Instant.ofEpochSecond(1230003600)), "NewMessage");
+		playerServiceImpl.changeStatusToOfflineOnMyAvailabilityTimeAndLeaveMessage(3L,
+				new AvailabilityTimeTO(Instant.ofEpochSecond(1230000000), Instant.ofEpochSecond(1230003600)),
+				"NewMessage");
 		assertEquals(Status.OFFLINE, playerRepositoryImpl.getPlayerAvailabilityList(3L).get(0).getStatus());
 		assertEquals("NewMessage", playerRepositoryImpl.getPlayerAvailabilityList(3L).get(0).getMessage());
-		
+
 	}
 
 	@Test

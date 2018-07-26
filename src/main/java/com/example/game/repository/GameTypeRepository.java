@@ -15,6 +15,5 @@ public interface GameTypeRepository {
 	Integer getNumerOfPlayersThisGame(String nameOfTheGame);
 
 	void eraseGameFromGamesContainer(Game game);
-	
 
 }

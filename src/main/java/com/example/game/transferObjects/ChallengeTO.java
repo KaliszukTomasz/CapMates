@@ -1,31 +1,16 @@
-package com.example.game.entity;
+package com.example.game.transferObjects;
 
 import java.time.LocalDateTime;
 
-public class Challenge {
+public class ChallengeTO {
 
-	private Long id;
 	private LocalDateTime date;
 	private String gameTitle;
 	private Long playerId;
 	private Integer score;
-
-	public Challenge(Long id, LocalDateTime date, String gameTitle, Long playerId, Integer score) {
-		super();
-		this.id = id;
-		this.date = date;
-		this.gameTitle = gameTitle;
-		this.playerId = playerId;
-		this.score = score;
-
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	
+	public ChallengeTO(){
+		
 	}
 
 	public LocalDateTime getDate() {
@@ -59,5 +44,6 @@ public class Challenge {
 	public void setScore(Integer score) {
 		this.score = score;
 	}
-
+	
+	
 }

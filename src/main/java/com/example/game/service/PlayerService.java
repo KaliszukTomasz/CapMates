@@ -3,29 +3,41 @@ package com.example.game.service;
 import java.util.List;
 import java.util.Set;
 
-import com.example.game.entity.Challenge;
 import com.example.game.entity.Game;
-import com.example.game.entity.Player;
-import com.example.game.entity.PlayerAvailability;
 import com.example.game.entity.Statistic;
+import com.example.game.transferObjects.AvailabilityTimeTO;
+import com.example.game.transferObjects.ChallengeTO;
 import com.example.game.transferObjects.PlayerProfile;
 
 public interface PlayerService {
 
 	Statistic getStatistic(Long playerId);
-	Integer getMyLevel (Long playerId);
-	Set<Game> getMyGames (Long playerId);
-	void eraseGameFromMyGames (Long playerId, String gameTitle);
+
+	Integer getMyLevel(Long playerId);
+
+	Set<Game> getMyGames(Long playerId);
+
+	void eraseGameFromMyGames(Long playerId, String gameTitle);
+
 	PlayerProfile getMyProfile(Long playerId);
-	
-//	Player getMyProfile(Long playerId);
+
+	// Player getMyProfile(Long playerId);
 	PlayerProfile editMyProfile(Long playerId, PlayerProfile playerProfil);
-	void addMyAvailabilityTime(Long playerId, PlayerAvailability availabilityTime);
-	void eraseMyAvailabilityTime (Long playerId, PlayerAvailability availabilityTime);
-//	Player login(String email, String password);
-	List<Challenge> getMyChallengeHistory(Long playerId);
+
+	void eraseMyAvailabilityTime(Long playerId, AvailabilityTimeTO availabilityTimeTO);
+
+	// Player login(String email, String password);
+	List<ChallengeTO> getMyChallengeHistory(Long playerId);
+
 	void addNewGameToMyGames(Long playerId, String gameTitle, Integer numberOfPlayers);
-	void changeStatusToOfflineOnMyAvailabilityTimeAndLeaveMessage(Long playerId, PlayerAvailability availabilityTime,
+
+	void changeStatusToOfflineOnMyAvailabilityTimeAndLeaveMessage(Long playerId, AvailabilityTimeTO availabilityTimeTO,
 			String Message);
-	
+
+	Set<Game> getAllGamesInCollection();
+
+	void changeMyPassword(Long playerId, PlayerProfile playerProfile);
+
+	void addMyAvailabilityTime(Long playerId, AvailabilityTimeTO availabilityTimeTO);
+
 }

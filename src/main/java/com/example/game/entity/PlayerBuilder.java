@@ -66,6 +66,7 @@ public class PlayerBuilder {
 	}
 
 	public Player build() {
-		return new Player(id, firstName, lastName, email, password, motto, statistic, level, playerAvailabilityList, games);
+		return new Player(id, firstName, lastName, email, password, motto, statistic, level, playerAvailabilityList,
+				games);
 	}
 }

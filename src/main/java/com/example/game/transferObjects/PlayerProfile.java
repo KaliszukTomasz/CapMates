@@ -5,14 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
-
 import com.example.game.entity.Game;
 import com.example.game.entity.PlayerAvailability;
 import com.example.game.entity.PlayerLevel;
-import com.example.game.entity.Ranking;
 import com.example.game.entity.Statistic;
-
 
 public class PlayerProfile {
 
@@ -22,11 +18,11 @@ public class PlayerProfile {
 	private String email;
 	private String motto;
 	private Statistic statistic;
-	private Ranking ranking;
 	private PlayerLevel level;
+	private String password;
 	private List<PlayerAvailability> playerAvailabilityList = new ArrayList<>();
 	private Set<Game> games = new HashSet<>();
-	// private List<GameHistory> gameHistories = new ArrayList<>();
+	
 
 	public PlayerProfile() {
 	}
@@ -79,14 +75,6 @@ public class PlayerProfile {
 		this.statistic = statistic;
 	}
 
-	public Ranking getRanking() {
-		return ranking;
-	}
-
-	public void setRanking(Ranking ranking) {
-		this.ranking = ranking;
-	}
-
 	public PlayerLevel getLevel() {
 		return level;
 	}
@@ -109,6 +97,14 @@ public class PlayerProfile {
 
 	public void setGames(Set<Game> games) {
 		this.games = games;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

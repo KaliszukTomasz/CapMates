@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.example.game.exceptions.PlayerAvailabilityListIsEmptyException;
-
 public class Player {
 
 	private static Long staticId; // atomic long

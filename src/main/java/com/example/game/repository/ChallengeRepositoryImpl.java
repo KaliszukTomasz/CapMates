@@ -16,7 +16,6 @@ public class ChallengeRepositoryImpl implements ChallengeRepository {
 	Integer AMOUNT_POINTS_PER_WIN = 10;
 	Integer AMOUNT_POINTS_PER_LOSE = 1;
 
-	
 	@Override
 	public String toString() {
 		return "ChallengeRepositoryImpl [challengeList=" + challengeList + "]";
@@ -40,8 +39,8 @@ public class ChallengeRepositoryImpl implements ChallengeRepository {
 	public void setChallengeList(List<Challenge> challengeList) {
 		this.challengeList = challengeList;
 	}
-	
-	public void addChallenge(Challenge challenge){
+
+	public void addChallenge(Challenge challenge) {
 		this.challengeList.add(challenge);
 	}
 
