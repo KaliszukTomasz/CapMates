@@ -22,8 +22,8 @@ public class Player {
 	// private List<GameHistory> gameHistories = new ArrayList<>();
 
 	public Player() {
-		id = staticId;
-		staticId++;
+//		id = staticId;
+//		staticId++;
 	}
 
 	public Player(Long id, String firstName, String lastName, String email, String password, String motto,

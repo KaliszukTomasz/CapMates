@@ -9,11 +9,7 @@ public class GameTypeTO {
 		
 	}
 
-	public GameTypeTO(String title, Integer numberOfPlayers) {
-		super();
-		this.title = title;
-		this.numberOfPlayers = numberOfPlayers;
-	}
+	
 
 	public String getTitle() {
 		return title;

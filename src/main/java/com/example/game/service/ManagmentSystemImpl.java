@@ -69,5 +69,4 @@ public class ManagmentSystemImpl implements ManagementSystem {
 
 		return listOfPossibleMeetings;
 	}
-
 }

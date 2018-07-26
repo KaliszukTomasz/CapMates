@@ -1,5 +1,6 @@
 package com.example.game.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -63,6 +64,9 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Override
 	public Set<GameTypeTO> getMyGames(Long playerId) {
+		if(playerRepository.getPlayerGames(playerId) == null){
+			return new HashSet<>();
+		}
 		return gameTypeListMapper.mapToGameTypeTOSet(playerRepository.getPlayerGames(playerId));
 	}
 
