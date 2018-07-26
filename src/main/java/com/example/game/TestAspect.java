@@ -26,18 +26,19 @@ public class TestAspect {
 	// LOGGER.info("EndTime:" + Instant.now().toString());
 	// Long newLong = Instant.now().toEpochMilli()-variableLong;
 	// LOGGER.info("Method executed in " + newLong +"ms");
-	//
-	//
 	// }
-	//
-	@Around("execution(* com.example.game.repository.*.*(..))")
-	public Object profile(ProceedingJoinPoint pjp) throws Throwable {
+	
+	@Around("execution(* com.example.game.repository.PlayerRepository.*(..))")
+	public Object profile(ProceedingJoinPoint joinPoint) throws Throwable {
 		long start = System.currentTimeMillis();
-		LOGGER.info("Going to call the method." + pjp.getSignature().getName());
-		Object output = pjp.proceed();
-		LOGGER.info("Method execution completed.");
+		// LOGGER.info("Going to call the method." +
+		// pjp.getSignature().getName());
+		Object output = joinPoint.proceed();
+		// LOGGER.info("Method execution completed.");
 		long elapsedTime = System.currentTimeMillis() - start;
-		LOGGER.info("Method execution time: " + elapsedTime + " milliseconds.");
+		LOGGER.info(
+				"Method " + joinPoint.getSignature().getName() + " execution time: " + elapsedTime + " milliseconds.");
 		return output;
 	}
+
 }

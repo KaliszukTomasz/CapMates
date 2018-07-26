@@ -13,12 +13,14 @@ import com.example.game.entity.Player;
 import com.example.game.entity.PlayerAvailability;
 import com.example.game.entity.Statistic;
 import com.example.game.mappers.ChallengeHistoryMapper;
+import com.example.game.mappers.GameTypeSetMapper;
 import com.example.game.mappers.ProfilPlayerMapper;
 import com.example.game.repository.ChallengeRepository;
 import com.example.game.repository.GameTypeRepository;
 import com.example.game.repository.PlayerRepository;
 import com.example.game.transferObjects.AvailabilityTimeTO;
 import com.example.game.transferObjects.ChallengeTO;
+import com.example.game.transferObjects.GameTypeTO;
 import com.example.game.transferObjects.PlayerProfile;
 
 @Service
@@ -39,6 +41,9 @@ public class PlayerServiceImpl implements PlayerService {
 	@Autowired
 	private ChallengeHistoryMapper challengeHistoryMapper;
 
+	@Autowired
+	private GameTypeSetMapper gameTypeListMapper;
+
 	@Override
 	public Statistic getStatistic(Long playerId) {
 		return playerRepository.getPlayerStaistics(playerId);
@@ -57,8 +62,8 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 	@Override
-	public Set<Game> getMyGames(Long playerId) {
-		return playerRepository.getPlayerGames(playerId);
+	public Set<GameTypeTO> getMyGames(Long playerId) {
+		return gameTypeListMapper.mapToGameTypeTOSet(playerRepository.getPlayerGames(playerId));
 	}
 
 	@Override
@@ -93,25 +98,24 @@ public class PlayerServiceImpl implements PlayerService {
 		player.setLastName(playerProfil.getLastName());
 		player.setGames(playerProfil.getGames());
 		player.setMotto(playerProfil.getMotto());
-		
+
 		playerRepository.editPlayer(player);
 		return getMyProfile(playerId);
 	}
-	
+
 	@Override
-	public void changeMyPassword(Long playerId, PlayerProfile playerProfile){
+	public void changeMyPassword(Long playerId, PlayerProfile playerProfile) {
 		Player player = playerRepository.getPlayer(playerId);
 		player.setPassword(playerProfile.getPassword());
 	}
 
 	@Override
 	public void addMyAvailabilityTime(Long playerId, AvailabilityTimeTO availabilityTimeTO) {
-		
+
 		PlayerAvailability availabilityTime = new PlayerAvailability();
 		availabilityTime.setEndTime(availabilityTimeTO.getEndTime());
 		availabilityTime.setStartTime(availabilityTimeTO.getStartTime());
-		
-		
+
 		playerRepository.addHoursAvailability(availabilityTime, playerId);
 	}
 

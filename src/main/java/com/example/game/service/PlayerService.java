@@ -7,6 +7,7 @@ import com.example.game.entity.Game;
 import com.example.game.entity.Statistic;
 import com.example.game.transferObjects.AvailabilityTimeTO;
 import com.example.game.transferObjects.ChallengeTO;
+import com.example.game.transferObjects.GameTypeTO;
 import com.example.game.transferObjects.PlayerProfile;
 
 public interface PlayerService {
@@ -15,7 +16,7 @@ public interface PlayerService {
 
 	Integer getMyLevel(Long playerId);
 
-	Set<Game> getMyGames(Long playerId);
+	Set<GameTypeTO> getMyGames(Long playerId);
 
 	void eraseGameFromMyGames(Long playerId, String gameTitle);
 

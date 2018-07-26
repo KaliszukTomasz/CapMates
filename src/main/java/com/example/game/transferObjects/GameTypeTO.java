@@ -1,17 +1,16 @@
-package com.example.game.entity;
+package com.example.game.transferObjects;
 
-public class Game {
+public class GameTypeTO {
 
 	private String title;
 	private Integer numberOfPlayers;
-
-	public Game() {
-
+	
+	public GameTypeTO(){
+		
 	}
 
-	public Game(String title, Integer numberOfPlayers) {
+	public GameTypeTO(String title, Integer numberOfPlayers) {
 		super();
-
 		this.title = title;
 		this.numberOfPlayers = numberOfPlayers;
 	}
@@ -31,4 +30,7 @@ public class Game {
 	public void setNumberOfPlayers(Integer numberOfPlayers) {
 		this.numberOfPlayers = numberOfPlayers;
 	}
+	
+	
+
 }

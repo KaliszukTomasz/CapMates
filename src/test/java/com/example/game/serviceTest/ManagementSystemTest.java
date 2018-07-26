@@ -1,6 +1,6 @@
 package com.example.game.serviceTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.time.Instant;
 
@@ -10,13 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.example.enums.Status;
-import com.example.game.entity.PlayerAvailability;
-import com.example.game.entity.Ranking;
-import com.example.game.repository.ChallengeRepositoryImpl;
-import com.example.game.repository.GameTypeRepositoryImpl;
 import com.example.game.repository.PlayerRepositoryImpl;
-import com.example.game.service.ChallengeSeviceImpl;
 import com.example.game.service.ManagementSystem;
 import com.example.game.service.PlayerServiceImpl;
 import com.example.game.transferObjects.AvailabilityTimeTO;
@@ -33,13 +27,10 @@ public class ManagementSystemTest {
 	@Autowired
 	PlayerRepositoryImpl playerRepositoryImpl;
 
-	@Test
-	public void should() {
-
-	}
 
 	@Test
 	public void shouldTestAvailabilityHours() {
+		//given
 		Instant instant1 = Instant.parse("2018-07-03T16:00:00.00Z");
 		Instant instant2 = Instant.parse("2018-07-03T18:16:00.00Z");
 		Instant instant3 = Instant.parse("2018-07-03T17:16:00.00Z");
@@ -58,12 +49,16 @@ public class ManagementSystemTest {
 		AvailabilityTimeTO playerAvailability4 = new AvailabilityTimeTO(instant7, instant8);
 		AvailabilityTimeTO playerAvailability5 = new AvailabilityTimeTO(instant9, instant10);
 		AvailabilityTimeTO playerAvailability6 = new AvailabilityTimeTO(instant11, instant12);
+		
+		//when
 		playerServiceImpl.addMyAvailabilityTime(0L, playerAvailability1);
 		playerServiceImpl.addMyAvailabilityTime(1L, playerAvailability2);
 		playerServiceImpl.addMyAvailabilityTime(2L, playerAvailability3);
 		playerServiceImpl.addMyAvailabilityTime(0L, playerAvailability4);
 		playerServiceImpl.addMyAvailabilityTime(3L, playerAvailability5);
 		playerServiceImpl.addMyAvailabilityTime(3L, playerAvailability6);
+		
+		//then
 		assertEquals(4, managementSystem.getListByPlayerOfPossibleMeetings(0L).size());
 		assertEquals(2, managementSystem.getListByPlayerOfPossibleMeetings(1L).size());
 		assertEquals(2, managementSystem.getListByPlayerOfPossibleMeetings(2L).size());

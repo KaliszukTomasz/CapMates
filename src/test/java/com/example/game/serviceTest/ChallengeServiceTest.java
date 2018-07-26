@@ -32,22 +32,31 @@ public class ChallengeServiceTest {
 
 	@Test
 	public void shouldShowRankingPointsFromOnePlayer() {
+		// given
+		// when
 		Ranking ranking = challengeServiceImpl.getPlayerRankingInOneGame(0L, "Chess");
-		assertTrue(21 == ranking.getPoints());
-
 		Ranking ranking2 = challengeServiceImpl.getPlayerRankingInOneGame(0L, "Monopoly");
+
+		// then
+		assertTrue(21 == ranking.getPoints());
 		assertTrue(10 == ranking2.getPoints());
 	}
 
 	@Test
 	public void shouldShowRankingPositionOnePlayerInOneGame() {
+		// given
+		// when
 		int rankingPosition = challengeServiceImpl.getPlayerPositionInRankingInOneGame(0L, "Chess");
+		// then
 		assertEquals(1, rankingPosition);
 	}
 
 	@Test
 	public void shouldShowRankingSecoundPositionOnePlayerInOneGame() {
+		// given
+		// when
 		int rankingPosition = challengeServiceImpl.getPlayerPositionInRankingInOneGame(1L, "Chess");
+		// then
 		assertEquals(2, rankingPosition);
 	}
 

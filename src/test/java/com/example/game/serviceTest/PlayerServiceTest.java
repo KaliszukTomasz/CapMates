@@ -1,5 +1,6 @@
 package com.example.game.serviceTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -19,6 +20,7 @@ import com.example.game.repository.GameTypeRepositoryImpl;
 import com.example.game.repository.PlayerRepositoryImpl;
 import com.example.game.service.PlayerServiceImpl;
 import com.example.game.transferObjects.AvailabilityTimeTO;
+import com.example.game.transferObjects.PlayerProfile;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,11 +39,39 @@ public class PlayerServiceTest {
 	PlayerServiceImpl playerServiceImpl;
 
 	@Test
-	public void shouldTakeListOfChallengeTO() {
+	public void shouldEditPlayerProfileTest() {
+		// Given
+		PlayerProfile playerProfile = new PlayerProfile();
+		playerProfile = playerServiceImpl.getMyProfile(2L);
+		// When
+		playerServiceImpl.editMyProfile(2L, new PlayerProfile());
+		// Then
+		assertThat(playerProfile).isNotEqualTo(playerServiceImpl.getMyProfile(2L));
+
+	}
+
+	@Test
+	public void shouldHideOurPasswordInPlayerProfileTest() {
+		// Given
+
+		// When
+		PlayerProfile playerProfil = playerServiceImpl.getMyProfile(1L);
+
+		// Then
+		assertTrue(playerProfil.getPassword() == null);
+
+	}
+
+	@Test
+	public void shouldTakeListOfChallengeTOTest() {
+		// Given
 		challengeRepositoryImpl.addChallenge(new Challenge(10L, LocalDateTime.now(), "monopol01", 5L, 10));
 		challengeRepositoryImpl.addChallenge(new Challenge(11L, LocalDateTime.now(), "monopol02", 5L, 1));
 		challengeRepositoryImpl.addChallenge(new Challenge(12L, LocalDateTime.now(), "monopol03", 5L, 10));
 		challengeRepositoryImpl.addChallenge(new Challenge(13L, LocalDateTime.now(), "monopol04", 5L, 10));
+		// When
+
+		// Then
 		assertEquals(4, (int) playerServiceImpl.getMyChallengeHistory(5L).size());
 		assertEquals("monopol02", playerServiceImpl.getMyChallengeHistory(5L).get(1).getGameTitle());
 		assertTrue(5L == playerServiceImpl.getMyChallengeHistory(5L).get(1).getPlayerId());
@@ -49,7 +79,8 @@ public class PlayerServiceTest {
 	}
 
 	@Test
-	public void shouldTakeActualPlayerLevel() {
+	public void shouldTakeActualPlayerLevelTest() {
+		// Given
 		challengeRepositoryImpl.addChallenge(new Challenge(10L, LocalDateTime.now(), "monopol", 4L, 10));
 		challengeRepositoryImpl.addChallenge(new Challenge(11L, LocalDateTime.now(), "monopol", 4L, 10));
 		challengeRepositoryImpl.addChallenge(new Challenge(12L, LocalDateTime.now(), "monopol", 4L, 10));
@@ -61,6 +92,9 @@ public class PlayerServiceTest {
 		challengeRepositoryImpl.addChallenge(new Challenge(18L, LocalDateTime.now(), "monopol", 4L, 10));
 		challengeRepositoryImpl.addChallenge(new Challenge(19L, LocalDateTime.now(), "monopol", 4L, 10));
 		challengeRepositoryImpl.addChallenge(new Challenge(20L, LocalDateTime.now(), "monopol", 4L, 10));
+		// When
+
+		// Then
 		assertEquals(2, (int) playerServiceImpl.getMyLevel(4L));
 		assertEquals(1, (int) playerServiceImpl.getMyLevel(0L));
 
@@ -68,6 +102,11 @@ public class PlayerServiceTest {
 
 	@Test
 	public void shouldAddAndEraseOneGamePlayerCollectionTest() {
+		// Given
+
+		// When
+
+		// Then
 		assertEquals(1, playerServiceImpl.getMyGames(0L).size());
 		playerServiceImpl.addNewGameToMyGames(0L, "Catan", 4);
 		assertEquals(2, playerServiceImpl.getMyGames(0L).size());
@@ -78,6 +117,11 @@ public class PlayerServiceTest {
 
 	@Test
 	public void shouldCheckGetStatisticTest() {
+		// Given
+
+		// When
+
+		// Then
 		assertEquals(4, playerServiceImpl.getMyChallengeHistory(0L).size());
 		assertEquals(1, (int) playerServiceImpl.getStatistic(0L).getLostGames());
 		assertEquals(3, (int) playerServiceImpl.getStatistic(0L).getWonGames());
@@ -85,10 +129,15 @@ public class PlayerServiceTest {
 	}
 
 	@Test
-	public void shouldAddNewHoursAndEraseToAvailabilityPlayer() {
+	public void shouldAddNewHoursAndEraseToAvailabilityPlayerTest() {
+		// Given
 		AvailabilityTimeTO availabilityTime = new AvailabilityTimeTO();
 		availabilityTime.setStartTime(Instant.now().plusSeconds(3600));
 		availabilityTime.setEndTime(Instant.now().plusSeconds(7200));
+
+		// When
+
+		// Then
 		assertEquals(0, playerRepositoryImpl.getPlayer(0L).getPlayerAvailabilityList().size());
 		playerServiceImpl.addMyAvailabilityTime(0L, availabilityTime);
 		assertEquals(1, playerRepositoryImpl.getPlayer(0L).getPlayerAvailabilityList().size());
@@ -99,9 +148,14 @@ public class PlayerServiceTest {
 
 	@Test
 	public void shouldChangeStatusToOfflineAndSetMessageTest() {
+		// Given
 		playerRepositoryImpl.getPlayerAvailabilityList(3L).clear();
 		playerServiceImpl.addMyAvailabilityTime(3L,
 				new AvailabilityTimeTO(Instant.ofEpochSecond(1230000000), Instant.ofEpochSecond(1230003600)));
+
+		// When
+
+		// Then
 		assertEquals(1, playerRepositoryImpl.getPlayerAvailabilityList(3L).size());
 		assertEquals(Status.ONLINE, playerRepositoryImpl.getPlayerAvailabilityList(3L).get(0).getStatus());
 		assertEquals("", playerRepositoryImpl.getPlayerAvailabilityList(3L).get(0).getMessage());
@@ -114,8 +168,12 @@ public class PlayerServiceTest {
 	}
 
 	@Test
-	public void shouldNotThrowExceptionPlayerAvailabilityListIsEmpty() {
+	public void shouldNotThrowExceptionPlayerAvailabilityListIsEmptyTest() {
+		// Given
 
+		// When
+
+		// Then
 		assertEquals(0, playerRepositoryImpl.getPlayer(1L).getPlayerAvailabilityList().size());
 
 	}
