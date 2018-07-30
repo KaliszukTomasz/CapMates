@@ -45,7 +45,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 		players.add(new PlayerBuilder().setFirstName("Kasia").setEmail("tomek3@wp.pl").setLastName("Pierwszy")
 				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setPlayerAvailabilityList(null)
 				.setId(2L).build());
-		players.add(new PlayerBuilder().setFirstName("Romek").setEmail("tomek4@wp.pl").setLastName("Pierwszy")
+		players.add(new PlayerBuilder().setFirstName("Tomek").setEmail("tomek4@wp.pl").setLastName("Pierwszy")
 				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setPlayerAvailabilityList(null)
 				.setId(3L).build());
 		players.add(new PlayerBuilder().setFirstName("Zuzia").setEmail("tomek5@wp.pl").setLastName("Pierwszy")

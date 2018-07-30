@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.example.game.entity.Game;
+import com.example.game.entity.Player;
 import com.example.game.entity.Statistic;
 import com.example.game.transferObjects.AvailabilityTimeTO;
 import com.example.game.transferObjects.ChallengeTO;
@@ -27,13 +28,18 @@ public interface PlayerService {
 
 	void eraseMyAvailabilityTime(Long playerId, AvailabilityTimeTO availabilityTimeTO);
 
+	List<PlayerProfile> getPlayerProfilesByFilter(PlayerProfile profilFilter);
+
 	// Player login(String email, String password);
 	List<ChallengeTO> getMyChallengeHistory(Long playerId);
 
 	void addNewGameToMyGames(Long playerId, String gameTitle, Integer numberOfPlayers);
 
+
+	List<PlayerProfile> getPlayerProfileList();
+
 	void changeStatusToOfflineOnMyAvailabilityTimeAndLeaveMessage(Long playerId, AvailabilityTimeTO availabilityTimeTO,
-			String Message);
+																  String Message);
 
 	Set<Game> getAllGamesInCollection();
 

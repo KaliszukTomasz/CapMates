@@ -107,11 +107,11 @@ public class PlayerServiceTest {
 		// When
 
 		// Then
-		assertEquals(1, playerServiceImpl.getMyGames(0L).size());
-		playerServiceImpl.addNewGameToMyGames(0L, "Catan", 4);
 		assertEquals(2, playerServiceImpl.getMyGames(0L).size());
+		playerServiceImpl.addNewGameToMyGames(0L, "Catan", 4);
+		assertEquals(3, playerServiceImpl.getMyGames(0L).size());
 		playerServiceImpl.eraseGameFromMyGames(0L, "Catan");
-		assertEquals(1, playerServiceImpl.getMyGames(0L).size());
+		assertEquals(2, playerServiceImpl.getMyGames(0L).size());
 
 	}
 
@@ -138,11 +138,11 @@ public class PlayerServiceTest {
 		// When
 
 		// Then
-		assertEquals(0, playerRepositoryImpl.getPlayer(0L).getPlayerAvailabilityList().size());
+		assertEquals(2, playerRepositoryImpl.getPlayer(0L).getPlayerAvailabilityList().size());
 		playerServiceImpl.addMyAvailabilityTime(0L, availabilityTime);
-		assertEquals(1, playerRepositoryImpl.getPlayer(0L).getPlayerAvailabilityList().size());
+		assertEquals(3, playerRepositoryImpl.getPlayer(0L).getPlayerAvailabilityList().size());
 		playerServiceImpl.eraseMyAvailabilityTime(0L, availabilityTime);
-		assertEquals(0, playerRepositoryImpl.getPlayer(0L).getPlayerAvailabilityList().size());
+		assertEquals(2, playerRepositoryImpl.getPlayer(0L).getPlayerAvailabilityList().size());
 
 	}
 
@@ -169,12 +169,8 @@ public class PlayerServiceTest {
 
 	@Test
 	public void shouldNotThrowExceptionPlayerAvailabilityListIsEmptyTest() {
-		// Given
-
-		// When
-
-		// Then
-		assertEquals(0, playerRepositoryImpl.getPlayer(1L).getPlayerAvailabilityList().size());
+			// Then
+		assertEquals(1, playerRepositoryImpl.getPlayer(1L).getPlayerAvailabilityList().size());
 
 	}
 }
