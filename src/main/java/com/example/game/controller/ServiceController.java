@@ -3,6 +3,7 @@ package com.example.game.controller;
 import com.example.game.entity.Player;
 import com.example.game.service.PlayerService;
 import com.example.game.transferObjects.PlayerProfile;
+import com.example.game.transferObjects.PlayerQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -30,12 +31,12 @@ public class ServiceController {
 
 
     @RequestMapping( method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void editProfilPlayer(@RequestBody PlayerProfile playerProfile){
-        playerService.editMyProfile(playerProfile.getId(), playerProfile);
+    public void editProfilPlayer(@RequestBody PlayerQuery playerQuery){
+        playerService.editMyProfile(playerQuery.getId(), playerQuery);
     }
 
     @RequestMapping(value = "/filter", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<PlayerProfile> filterPlayers(@RequestBody PlayerProfile playerProfile){
-       return playerService.getPlayerProfilesByFilter(playerProfile);
+    public List<PlayerProfile> filterPlayers(@RequestBody PlayerQuery playerQuery){
+       return playerService.getPlayerProfilesByFilter(playerQuery);
     }
 }

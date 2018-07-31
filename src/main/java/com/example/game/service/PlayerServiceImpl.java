@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.game.controller.RestResponseExceptionHandler;
+import com.example.game.transferObjects.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,6 @@ import com.example.game.mappers.ProfilPlayerMapper;
 import com.example.game.repository.ChallengeRepository;
 import com.example.game.repository.GameTypeRepository;
 import com.example.game.repository.PlayerRepository;
-import com.example.game.transferObjects.AvailabilityTimeTO;
-import com.example.game.transferObjects.ChallengeTO;
-import com.example.game.transferObjects.GameTypeTO;
-import com.example.game.transferObjects.PlayerProfile;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
@@ -57,37 +54,57 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
 
+    private List<PlayerProfile> filterByFirstName(String firstName, List<PlayerProfile> playerProfileList) {
+        if (null != firstName) {
+            playerProfileList =
+                    playerProfileList.stream().filter(profile ->
+                            firstName.equals(profile.getFirstName()))
+                            .collect(Collectors.toList());
+        }
+        return playerProfileList;
+    }
+
+    private List<PlayerProfile> filterByLastName(String lastName, List<PlayerProfile> playerProfileList) {
+        if (null != lastName) {
+            playerProfileList =
+                    playerProfileList.stream().filter(profile ->
+                            lastName.equals(profile.getLastName()))
+                            .collect(Collectors.toList());
+        }
+        return playerProfileList;
+    }
+
+    private List<PlayerProfile> filterByEmail(String email, List<PlayerProfile> playerProfileList) {
+        if (null != email) {
+            playerProfileList =
+                    playerProfileList.stream().filter(profile ->
+                            email.equals(profile.getEmail())).collect(Collectors.toList());
+        }
+        return playerProfileList;
+    }
+
+    private List<PlayerProfile> filterByMotto(String motto, List<PlayerProfile> playerProfileList) {
+        if (null != motto) {
+            playerProfileList =
+                    playerProfileList.stream().filter(profile ->
+                            motto.equals(profile.getMotto())).collect(Collectors.toList());
+        }
+        return playerProfileList;
+    }
+
     @Override
-    public List<PlayerProfile> getPlayerProfilesByFilter(PlayerProfile profilFilter) {
+    public List<PlayerProfile> getPlayerProfilesByFilter(PlayerQuery profilFilter) {
         List<PlayerProfile> playerProfileList = getPlayerProfileList();
-        if (null != profilFilter.getFirstName()) {
-            playerProfileList =
-                    playerProfileList.stream().filter(profile ->
-                            profilFilter.getFirstName().equals(profile.getFirstName()))
-                            .collect(Collectors.toList());
-        }
-        if (null != profilFilter.getLastName()) {
-            playerProfileList =
-                    playerProfileList.stream().filter(profile ->
-                            profilFilter.getLastName().equals(profile.getLastName()))
-                            .collect(Collectors.toList());
-        }
-        if (null != profilFilter.getEmail()){
-            playerProfileList =
-                    playerProfileList.stream().filter(profile ->
-                            profilFilter.getEmail().equals(profile.getEmail())).collect(Collectors.toList());
-        }
-        if (null != profilFilter.getMotto()){
-            playerProfileList =
-                    playerProfileList.stream().filter(profile ->
-                            profilFilter.getMotto().equals(profile.getMotto())).collect(Collectors.toList());
-        }
+        playerProfileList = filterByFirstName(profilFilter.getFirstName(), playerProfileList);
+        playerProfileList = filterByLastName(profilFilter.getLastName(), playerProfileList);
+        playerProfileList = filterByEmail(profilFilter.getEmail(), playerProfileList);
+        playerProfileList = filterByMotto(profilFilter.getMotto(), playerProfileList);
+
         if (playerProfileList.isEmpty()) {
             throw new NoSuchElementException();
         }
 
         return playerProfileList;
-
     }
 
 
@@ -132,7 +149,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public PlayerProfile editMyProfile(Long playerId, PlayerProfile playerProfil) {
+    public PlayerProfile editMyProfile(Long playerId, PlayerQuery playerProfil) {
         Player player = playerRepository.getPlayer(playerId);
         player.setFirstName(playerProfil.getFirstName());
         player.setLastName(playerProfil.getLastName());

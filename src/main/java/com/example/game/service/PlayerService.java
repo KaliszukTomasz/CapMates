@@ -6,10 +6,7 @@ import java.util.Set;
 import com.example.game.entity.Game;
 import com.example.game.entity.Player;
 import com.example.game.entity.Statistic;
-import com.example.game.transferObjects.AvailabilityTimeTO;
-import com.example.game.transferObjects.ChallengeTO;
-import com.example.game.transferObjects.GameTypeTO;
-import com.example.game.transferObjects.PlayerProfile;
+import com.example.game.transferObjects.*;
 
 public interface PlayerService {
 
@@ -24,11 +21,11 @@ public interface PlayerService {
 	PlayerProfile getMyProfile(Long playerId);
 
 	// Player getMyProfile(Long playerId);
-	PlayerProfile editMyProfile(Long playerId, PlayerProfile playerProfil);
+	PlayerProfile editMyProfile(Long playerId, PlayerQuery playerProfil);
 
 	void eraseMyAvailabilityTime(Long playerId, AvailabilityTimeTO availabilityTimeTO);
 
-	List<PlayerProfile> getPlayerProfilesByFilter(PlayerProfile profilFilter);
+	List<PlayerProfile> getPlayerProfilesByFilter(PlayerQuery profilFilter);
 
 	// Player login(String email, String password);
 	List<ChallengeTO> getMyChallengeHistory(Long playerId);

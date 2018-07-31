@@ -22,9 +22,23 @@ public class PlayerProfile {
 	private String password;
 	private List<PlayerAvailability> playerAvailabilityList = new ArrayList<>();
 	private Set<Game> games = new HashSet<>();
-	
+
+
 
 	public PlayerProfile() {
+	}
+
+	public PlayerProfile(Long id, String firstName, String lastName, String email, String motto, Statistic statistic, PlayerLevel level, String password, List<PlayerAvailability> playerAvailabilityList, Set<Game> games) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.motto = motto;
+		this.statistic = statistic;
+		this.level = level;
+		this.password = password;
+		this.playerAvailabilityList = playerAvailabilityList;
+		this.games = games;
 	}
 
 	public Long getId() {

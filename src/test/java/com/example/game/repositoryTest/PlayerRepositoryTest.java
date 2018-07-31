@@ -48,7 +48,7 @@ public class PlayerRepositoryTest {
 				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setPlayerAvailabilityList(null)
 				.setId(3L).build();
 		// then
-		assertEquals("Romek", playerRepositoryImpl.getPlayer(3L).getFirstName());
+		assertEquals("Tomek", playerRepositoryImpl.getPlayer(3L).getFirstName());
 		playerRepositoryImpl.editPlayer(newPlayer);
 		assertEquals("Tome", playerRepositoryImpl.getPlayer(3L).getFirstName());
 

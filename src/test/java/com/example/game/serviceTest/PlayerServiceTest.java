@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
+import com.example.game.transferObjects.PlayerProfileBuilder;
+import com.example.game.transferObjects.PlayerQuery;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class PlayerServiceTest {
 		PlayerProfile playerProfile = new PlayerProfile();
 		playerProfile = playerServiceImpl.getMyProfile(2L);
 		// When
-		playerServiceImpl.editMyProfile(2L, new PlayerProfile());
+		playerServiceImpl.editMyProfile(2L, new PlayerQuery());
 		// Then
 		assertThat(playerProfile).isNotEqualTo(playerServiceImpl.getMyProfile(2L));
 
