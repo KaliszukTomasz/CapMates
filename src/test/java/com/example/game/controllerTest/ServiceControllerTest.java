@@ -5,8 +5,6 @@ import com.example.game.controller.ServiceController;
 import com.example.game.service.PlayerService;
 import com.example.game.transferObjects.PlayerProfile;
 import com.example.game.transferObjects.PlayerProfileBuilder;
-import com.sun.xml.internal.ws.encoding.ContentType;
-import org.apache.tomcat.util.http.parser.MediaType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -66,7 +65,8 @@ public class ServiceControllerTest {
         ResultActions resultActions = mockMvc.perform(get("/players/1"));
 
         // then
-        resultActions.andExpect(status().isOk()).andExpect(jsonPath("firstName").value("Tomasz"));
+        resultActions.andExpect(status().isOk()).andExpect(jsonPath("firstName").value("Tomasz"))
+                .andExpect(jsonPath("id").value(1L));
 
 
 //        ResultActions resultActions = mockMvc.perform(post("/rest/test/create").content(json));
@@ -84,9 +84,50 @@ public class ServiceControllerTest {
         //then
         resultActions.andExpect(status().isOk()).andExpect(jsonPath("$[0]firstName")
                 .value("Adam")).andExpect(jsonPath("$[1]firstName").value("Basia"));
+    }
+
+    @Test
+    public void shouldEditExistedPlayer() throws Exception {
+        // given
+        PlayerProfile playerProfile = new PlayerProfileBuilder().setFirstName("Adam").setLastName("Pierwszy").build();
+        Mockito.when(playerService.editMyProfile(Mockito.any(), Mockito.any())).thenReturn(playerProfile);
+        // when
+        ResultActions resultActions = mockMvc.perform(put("/players")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id\": 1,\n" +
+                        "        \"firstName\": \"Basia\",\n" +
+                        "        \"lastName\": \"Piergjtrsy123\",\n" +
+                        "        \"email\": \"tomek3@wp.pl\",\n" +
+                        "        \"motto\": \"motto1\"\n" +
+                        "}"));
+        //then
+        resultActions.andExpect(status().isCreated());
 
 
     }
 
+    @Test
+    public void shouldFilterPlayers() throws Exception {
+        // given
+        List<PlayerProfile> playerProfiles = new ArrayList<>();
+        playerProfiles.add(new PlayerProfileBuilder().setFirstName("Adam").setLastName("Pierwszy").build());
+        playerProfiles.add(new PlayerProfileBuilder().setFirstName("Basia").setLastName("Druga").build());
+
+        Mockito.when(playerService.getPlayerProfilesByFilter(Mockito.any())).thenReturn(playerProfiles);
+        // when
+        ResultActions resultActions = mockMvc.perform(put("/players/filter")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(" {     \"firstName\": \"Zosia\",\n" +
+                        "        \"lastName\": \"Pierwszy\",\n" +
+                        "        \"email\": null,\n" +
+                        "        \"motto\": null\n" +
+                        " }"));
+        //then
+        resultActions.andExpect(status().isCreated())
+                .andExpect(jsonPath("$[0]firstName").value("Adam"))
+                .andExpect(jsonPath("$[1]firstName").value("Basia"));
+
+
+    }
 
 }

@@ -5,6 +5,7 @@ import com.example.game.service.PlayerService;
 import com.example.game.transferObjects.PlayerProfile;
 import com.example.game.transferObjects.PlayerQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,22 +21,26 @@ public class ServiceController {
     PlayerService playerService;
 
     @RequestMapping(method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
     public List<PlayerProfile> getAllPlayers(){
         return playerService.getPlayerProfileList();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
     public PlayerProfile getPlayerProfile(@PathVariable("id")  Long id){
         return playerService.getMyProfile(id);
     }
 
 
     @RequestMapping( method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     public void editProfilPlayer(@RequestBody PlayerQuery playerQuery){
         playerService.editMyProfile(playerQuery.getId(), playerQuery);
     }
 
     @RequestMapping(value = "/filter", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     public List<PlayerProfile> filterPlayers(@RequestBody PlayerQuery playerQuery){
        return playerService.getPlayerProfilesByFilter(playerQuery);
     }
