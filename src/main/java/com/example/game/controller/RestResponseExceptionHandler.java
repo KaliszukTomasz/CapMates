@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import sun.awt.SunHints;
 
@@ -32,17 +33,24 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
 
 
     @ExceptionHandler(value = NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Object> noSuchElement(RuntimeException ex, WebRequest request) {
         String bodyOfResponse = "No such element in database, please chanege filter";
-        return ResponseEntity.status(HttpStatus.valueOf(403)).body(bodyOfResponse);
+        return ResponseEntity.status(HttpStatus.valueOf(404)).body(bodyOfResponse);
 
     }
 
     @ExceptionHandler(value = UserNotFondException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Object> userNotFoundException(RuntimeException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.valueOf(404)).body("Processing error: " + ex.getMessage());
 
     }
 
+    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> argumentMismatchException(RuntimeException ex, HttpServletRequest request){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
+    }
 }
 
