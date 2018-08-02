@@ -43,8 +43,7 @@ public class PlayerServiceTest {
 	@Test
 	public void shouldEditPlayerProfileTest() {
 		// Given
-		PlayerProfile playerProfile = new PlayerProfile();
-		playerProfile = playerServiceImpl.getMyProfile(2L);
+		PlayerProfile playerProfile = playerServiceImpl.getMyProfile(2L);
 		// When
 		playerServiceImpl.editMyProfile(2L, new PlayerQuery());
 		// Then
