@@ -26,7 +26,6 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 	private List<Player> players = new ArrayList<>();
 
 	Integer AMOUNT_POINTS_PER_WIN = 10;
-	Integer AMOUNT_POINTS_PER_LOSE = 1;
 
 	@Autowired
 	ChallengeRepository challengeRepository;
@@ -34,8 +33,6 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 	public PlayerRepositoryImpl() {
 		Set<Game> secik = new HashSet<>();
 		secik.add(new Game("Splendor", 4));
-		List<PlayerAvailability> availabilityList = new ArrayList<>();
-		availabilityList.add(new PlayerAvailability(Instant.now(), Instant.now()));
 		players.add(new PlayerBuilder().setFirstName("Tomek").setEmail("tomek1@wp.pl").setLastName("Pierwszy")
 				.setLevel(new PlayerLevel()).setMotto("motto1").setPassword("password").setGames(secik)
 				.setPlayerAvailabilityList(null).setId(0L).setStatistic(new Statistic()).build());
@@ -100,9 +97,6 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 	@Override 
 	public void eraseHoursAvailability(Instant timeFrom, Instant timeTo, Long playerId) {
 		Player player = getPlayer(playerId);
-		PlayerAvailability playerAvailability = new PlayerAvailability();
-		playerAvailability.setEndTime(timeTo);
-		playerAvailability.setStartTime(timeFrom);
 		player.getPlayerAvailabilityList()
 				.removeIf(time -> time.getStartTime().equals(timeFrom) && time.getEndTime().equals(timeTo));
 	}
@@ -171,7 +165,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 		Player player = getPlayer(playerId);
 		player.setStatistic(new Statistic(0, 0));
 		for (Challenge challenge : challengeRepository.getPlayerAllChallengeHistory(playerId)) {
-			if (challenge.getScore() == AMOUNT_POINTS_PER_WIN) {
+			if (AMOUNT_POINTS_PER_WIN.equals(challenge.getScore())) {
 				player.getStatistic().setWonGames(player.getStatistic().getWonGames() + 1);
 			} else {
 				player.getStatistic().setLostGames(player.getStatistic().getLostGames() + 1);

@@ -1,26 +1,19 @@
 package com.example.game.service;
 
-import java.awt.image.Kernel;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import com.example.game.controller.RestResponseExceptionHandler;
-import com.example.game.transferObjects.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.enums.Status;
-import com.example.game.entity.Challenge;
-import com.example.game.entity.Game;
-import com.example.game.entity.Player;
-import com.example.game.entity.PlayerAvailability;
-import com.example.game.entity.Statistic;
+import com.example.game.entity.*;
 import com.example.game.mappers.ChallengeHistoryMapper;
 import com.example.game.mappers.GameTypeSetMapper;
 import com.example.game.mappers.ProfilPlayerMapper;
 import com.example.game.repository.ChallengeRepository;
 import com.example.game.repository.GameTypeRepository;
 import com.example.game.repository.PlayerRepository;
+import com.example.game.transferObjects.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
@@ -206,21 +199,4 @@ public class PlayerServiceImpl implements PlayerService {
 
         }
     }
-    // @Override
-    // public Player login(String email, String password) {
-    // Optional<Player> actualPlayer =
-    // playerRepository.getPlayers().stream().filter(gamer ->
-    // gamer.getEmail().equals(email))
-    // .findFirst();
-    // if (!actualPlayer.isPresent()) {
-    // throw new UnauthorizedLoginException("Email doeasnt exist!");
-    // }
-    // Player player = actualPlayer.get();
-    // if (!player.getPassword().equals(password)) {
-    // throw new UnauthorizedLoginException("Password is incorrect!");
-    // }
-    //
-    // return player;
-    // }
-
 }

@@ -1,11 +1,12 @@
 package com.example.game.service;
 
 import com.example.game.entity.Ranking;
+import com.example.game.transferObjects.RankingTO;
 
 public interface ChallengeService {
 
-	Ranking getPlayerRankingInOneGame(Long playerId, String gameTitle);
+	RankingTO getPlayerRankingInOneGame(Long playerId, String gameTitle);
 
-	Integer getPlayerPositionInRankingInOneGame(Long playerId, String gameTitle);
+	Integer findPlayerPositionInRankingInOneGame(Long playerId, String gameTitle);
 
 }

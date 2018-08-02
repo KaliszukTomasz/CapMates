@@ -1,5 +1,6 @@
 package com.example.game.transferObjects;
 
+
 public class GameTypeTO {
 
 	private String title;

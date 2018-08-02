@@ -13,8 +13,7 @@ import com.example.game.transferObjects.GameTypeTO;
 public class GameTypeSetMapper {
 
 	public Set<GameTypeTO> mapToGameTypeTOSet(Set<Game> gameSet) {
-		Set<GameTypeTO> gameTypeToSet = new HashSet<>();
-		gameTypeToSet = gameSet.stream().map(temp -> {
+		Set<GameTypeTO> gameTypeToSet = gameSet.stream().map(temp -> {
 			GameTypeTO newObj = new GameTypeTO();
 			newObj.setNumberOfPlayers(temp.getNumberOfPlayers());
 			newObj.setTitle(temp.getTitle());

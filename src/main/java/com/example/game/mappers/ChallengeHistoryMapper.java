@@ -14,9 +14,7 @@ public class ChallengeHistoryMapper {
 
 	public List<ChallengeTO> mapChallengeHistory(List<Challenge> challengeList) {
 
-		List<ChallengeTO> challengeToList = new ArrayList<>();
-
-		challengeToList = challengeList.stream().map(temp -> {
+		List<ChallengeTO> challengeToList = challengeList.stream().map(temp -> {
 			ChallengeTO newObj = new ChallengeTO();
 			newObj.setDate(temp.getDate());
 			newObj.setGameTitle(temp.getGameTitle());

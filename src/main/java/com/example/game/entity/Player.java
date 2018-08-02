@@ -7,7 +7,6 @@ import java.util.Set;
 
 public class Player {
 
-	private static Long staticId; // atomic long
 	private Long id;
 	private String firstName;
 	private String lastName;
@@ -15,15 +14,11 @@ public class Player {
 	private String password;
 	private String motto;
 	private Statistic statistic;
-	// private Ranking ranking;
 	private PlayerLevel level;
 	private List<PlayerAvailability> playerAvailabilityList = Collections.emptyList();
 	private Set<Game> games = Collections.emptySet();
-	// private List<GameHistory> gameHistories = new ArrayList<>();
 
 	public Player() {
-//		id = staticId;
-//		staticId++;
 	}
 
 	public Player(Long id, String firstName, String lastName, String email, String password, String motto,

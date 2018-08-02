@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.example.game.mappers.RankingMapper;
+import com.example.game.transferObjects.RankingTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +24,14 @@ public class ChallengeSeviceImpl implements ChallengeService {
 	@Autowired
 	PlayerRepository playerRepository;
 
-	Integer AMOUNT_POINTS_PER_WIN = 10;
-	Integer AMOUNT_POINTS_PER_LOSE = 1;
-
+	/**
+	 * this method get RankingTO object with player pionts in one game based on game history.
+	 * @param playerId
+	 * @param gameTitle
+	 * @return
+	 */
 	@Override
-	public Ranking getPlayerRankingInOneGame(Long playerId, String gameTitle) {
+	public RankingTO getPlayerRankingInOneGame(Long playerId, String gameTitle) {
 		Ranking ranking = new Ranking(0);
 		if (challengeRepository.getPlayerOneGameChallengeHistory(playerId, gameTitle) == null) {
 			throw new NoChallegnesThisGameThisPlayerException();
@@ -34,11 +39,20 @@ public class ChallengeSeviceImpl implements ChallengeService {
 		for (Challenge challenge : challengeRepository.getPlayerOneGameChallengeHistory(playerId, gameTitle)) {
 			ranking.setPoints(ranking.getPoints() + challenge.getScore());
 		}
-		return ranking;
+
+		RankingMapper rankingMapper = new RankingMapper();
+
+		return rankingMapper.mapToRankingTO(ranking);
 	}
 
+	/**
+	 * This method get player position in ranking in one game title.
+	 * @param playerId
+	 * @param gameTitle
+	 * @return
+	 */
 	@Override
-	public Integer getPlayerPositionInRankingInOneGame(Long playerId, String gameTitle) {
+	public Integer findPlayerPositionInRankingInOneGame(Long playerId, String gameTitle) {
 		List<Integer> rankingList = new ArrayList<>();
 		for (Player player : playerRepository.getPlayers()) {
 			Long id = player.getId();

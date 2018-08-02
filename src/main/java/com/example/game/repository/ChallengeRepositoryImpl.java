@@ -22,14 +22,14 @@ public class ChallengeRepositoryImpl implements ChallengeRepository {
 	}
 
 	public ChallengeRepositoryImpl() {
-		challengeList.add(new Challenge(0L, LocalDateTime.now(), "Chess", 0L, 10));
-		challengeList.add(new Challenge(1L, LocalDateTime.now(), "Chess", 1L, 10));
-		challengeList.add(new Challenge(2L, LocalDateTime.now(), "Chess", 2L, 10));
-		challengeList.add(new Challenge(3L, LocalDateTime.now(), "Chess", 3L, 10));
-		challengeList.add(new Challenge(4L, LocalDateTime.now(), "Chess", 1L, 10));
-		challengeList.add(new Challenge(5L, LocalDateTime.now(), "Monopoly", 0L, 10));
-		challengeList.add(new Challenge(6L, LocalDateTime.now(), "Chess", 0L, 10));
-		challengeList.add(new Challenge(7L, LocalDateTime.now(), "Chess", 0L, 1));
+		challengeList.add(new Challenge(0L, LocalDateTime.now(), "Chess", 0L, AMOUNT_POINTS_PER_WIN));
+		challengeList.add(new Challenge(1L, LocalDateTime.now(), "Chess", 1L, AMOUNT_POINTS_PER_WIN));
+		challengeList.add(new Challenge(2L, LocalDateTime.now(), "Chess", 2L, AMOUNT_POINTS_PER_WIN));
+		challengeList.add(new Challenge(3L, LocalDateTime.now(), "Chess", 3L, AMOUNT_POINTS_PER_WIN));
+		challengeList.add(new Challenge(4L, LocalDateTime.now(), "Chess", 1L, AMOUNT_POINTS_PER_WIN));
+		challengeList.add(new Challenge(5L, LocalDateTime.now(), "Monopoly", 0L, AMOUNT_POINTS_PER_WIN));
+		challengeList.add(new Challenge(6L, LocalDateTime.now(), "Chess", 0L, AMOUNT_POINTS_PER_WIN));
+		challengeList.add(new Challenge(7L, LocalDateTime.now(), "Chess", 0L, AMOUNT_POINTS_PER_LOSE));
 	}
 
 	public List<Challenge> getChallengeList() {
@@ -49,7 +49,7 @@ public class ChallengeRepositoryImpl implements ChallengeRepository {
 		List<Challenge> playerChallengeHistory = new ArrayList<>();
 
 		for (Challenge challenge : challengeList) {
-			if (challenge.getPlayerId() == playerId) {
+			if (playerId.equals(challenge.getPlayerId())) {
 				playerChallengeHistory.add(challenge);
 			}
 		}
@@ -61,7 +61,7 @@ public class ChallengeRepositoryImpl implements ChallengeRepository {
 		List<Challenge> playerOneGameChallengeHistory = new ArrayList<>();
 
 		for (Challenge challenge : challengeList) {
-			if (challenge.getPlayerId() == playerId && challenge.getGameTitle() == gameTitle) {
+			if (challenge.getPlayerId().equals(playerId) && challenge.getGameTitle().equals(gameTitle)) {
 				playerOneGameChallengeHistory.add(challenge);
 			}
 		}
